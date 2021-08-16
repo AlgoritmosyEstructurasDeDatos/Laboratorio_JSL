@@ -1,5 +1,7 @@
 # Algoritmos y Estructuras de Datos - Taller
 
+*Este README.md se ve mejor con Typora o equivalente*
+
 [toc]
 
 ## El Profesor

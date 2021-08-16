@@ -4,19 +4,6 @@
 
 [toc]
 
-## El Profesor
-
-- Javier Salazar Loyola
-- Correos: 
-  - j.salazarloyola@uandresbello.edu (oficial)
-  - javier.salazar.l@usach.cl (alternativo, en caso de emergencia)
-- Tauro (☉), Aries (☊), Libra (☾), Tigre (fuego), tipo 5, INTP, 0+
-- T.E.A.
-- Main support.
-- Horario de atención: ~~cuando vea los correos~~ Horario de oficina, salvo acuerdo previo.
-- Lugar de atención: correo, mientras el mundo siga en colapso.
-- ~~Dice que~~ sabe cosas.
-
 ## El Taller/Laboratorio
 
 - Sesiones prácticas semanales.

@@ -99,20 +99,9 @@
 
 - Al momento de compilar, solo incluimos como parámetros de GCC los códigos fuentes, no los headers, ya que estos serán incluidos por el compilador sin necesidad de nuestra intervención.
 
-### Ejemplo
-
-- Creemos una biblioteca para manejar vectores en un espacio bidimensional cartesiano, es decir, vectores con coordenadas $x$ e $y$, junto a las operaciones básicas vectoriales:
-  - Suma vectorial $\vec{v_1} + \vec{v_2}$
-  - Resta vectorial $\vec{v_1} - \vec{v_2}$
-  - Multiplicación por escalar $a\cdot\vec{v_1}$
-  - Módulo del vector (requerirá la biblioteca `math.h`), $||\vec{v}||$​
-- Adicionalmente, veamos funciones para dar un formato de visualización cómodo al vector y pedirlo por teclado.
-- Para esto, creamos la biblioteca `vector.h`, con los **prototipos** de las funciones a desarrollar, además de la definición del tipo de dato `vec2d_t`, para representar vectores bidimensionales.
-- Junto a ello, escribiremos el código de cada función en el archivo para código fuente `vector.c`
-
 ### Ejercicio
 
-- Hay que implementar una biblioteca para números complejos. Un número $z$ pertenece al conjunto de los números complejos $\mathbb{C}$, si está formado por una parte real y una imaginaria y tiene la forma general $z = a + ib$, en donde $a$ corresponde a su **parte real** y $b$​​, a si **parte imaginaria**.
+- Además de los propuestos en la diapositiva de la clase (ver BlackBoard), puede implementarse una biblioteca para números complejos. Un número $z$​ pertenece al conjunto de los números complejos $\mathbb{C}$​, si está formado por una parte real y una imaginaria y tiene la forma general $z = a + ib$​, en donde $a$​ corresponde a su **parte real** y $b$​​​, a si **parte imaginaria**.
 
 - La constante imaginaria $i$​ (llamada $j$​ en algunas disciplinas, como ingeniería eléctrica o ciertas áreas de la física) es tal que $i^2 = -1$​, por lo que no tiene una representación numérica: el número complejo se representa, entonces, como un par ordenado $z = (a, b)$​, donde $a, b\in\mathbb{R}$​. Nótese que esto implica de inmediato que $\mathbb{R}\subset\mathbb{C}$ y que $z\in\mathbb{R}$ si $b=0$.
 

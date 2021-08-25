@@ -29,9 +29,10 @@ curve insert_point(curve c, int pos, point p, size_t* size){
     }
     // Copiamos el punto en la nueva posición
     c[pos] = p;
-    // Llegados acá, aumentamos el tamaño del arreglo
+    // Llegados acá, aumentamos el tamaño del arreglo, para llevar el registro
     (*size)++;
     
+    // Retorna el puntero a la curva actualizada
     return c;
 }
 
@@ -52,8 +53,10 @@ curve remove_point(curve c, int pos, size_t* size){
      * ocurra primero), no es necesario quitarle el espacio.
      */
     c = (curve)realloc(c, (*size-1)*sizeof(point));
+    // Disminuye el tamaño de la curva
     (*size)--;
     
+    // Retorna el puntero a la curva actualizada
     return c;
 }
 

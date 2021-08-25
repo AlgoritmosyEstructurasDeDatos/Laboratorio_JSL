@@ -36,7 +36,7 @@
 
   Por supuesto, el problema aquí es que no  tenemos el tamaño de manera explícita declarada en el arreglo.
 
-- Esto último puede significar un problema, puesto que C no provee un mecanismo para determinar cuál es el tamaño de un arreglo. Lo más cercano es el operador `sizeof`, que entrega un valor de tipo `site_t`(ver [Nota 1][note1]) (definido en, por ejemplo, `stdlib.h`) con la cantidad de **bytes** que ocupa el arreglo definido. A partir de esto, podemos determinar su tamaño, dividiendo dicha cantidad por la cantidad de bytes utilizados por cada elemento:
+- Esto último puede significar un problema, puesto que C no provee un mecanismo para determinar cuál es el tamaño de un arreglo. Lo más cercano es el operador `sizeof`, que entrega un valor de tipo `site_t`[^1] (definido en, por ejemplo, `stdlib.h`) con la cantidad de **bytes** que ocupa el arreglo definido. A partir de esto, podemos determinar su tamaño, dividiendo dicha cantidad por la cantidad de bytes utilizados por cada elemento:
 
   ```C
   /* El operador sizeof requiere paréntesis
@@ -48,7 +48,7 @@
 
   Sin embargo, este mecanismo no funciona, por ejemplo, cuando el arreglo es el parámetro de una función: esta requerirá, si hiciese falta, el tamaño como un parámetro adicional.
 
-[note1]: El tipo `size_t` tiene una definición dependiente de la plataforma, pero, en general, corresponde a un entero largo sin signo (`unsigned long` o algo equivalente).
+[^1]: El tipo `size_t` tiene una definición dependiente de la plataforma, pero, en general, corresponde a un entero largo sin signo (`unsigned long` o algo equivalente).
 
 ### Strings
 
@@ -110,7 +110,7 @@
   int search(float* array, float term, int size);
   ```
 
-  El parámetro `size` es pedido para poder saber hasta qué elemento puedo recorrer el arreglo. Dentro de la función, este arreglo puede ser utilizado como un puntero, utilizando el álgebra de estos (ver [Nota 2][note2]). Por ejemplo, para verificar si el elemento está dentro del arreglo, podemos hacer:
+  El parámetro `size` es pedido para poder saber hasta qué elemento puedo recorrer el arreglo. Dentro de la función, este arreglo puede ser utilizado como un puntero, utilizando el álgebra de estos[^2]. Por ejemplo, para verificar si el elemento está dentro del arreglo, podemos hacer:
 
   ```C
   // i lo definimos como el iterador para acceder
@@ -149,8 +149,7 @@
 
 - El gran problema surgido de esta aproximación, claro, es que, como se señala antes, no hay forma de saber cuántos elementos tiene el arreglo generado así. Hemos de tener un registro muy cuidadoso de dónde almacenaremos el tamaño del arreglo, de modo que esté disponible para cuando lo necesitemos, de otro modo, podríamos incurrir en violaciones de segmento (*segmentation fault* o **segfault**, ocurrida porque nuestro programa intenta acceder zonas de memoria que no le están permitidas).
 
-[note2]: Sumar y restar enteros a un puntero permite desplazar el sitio al que apuntan en esa cantidad de "posiciones", entendiendo estas como bloques de memoria del tamaño adecuado para representar el dato al que apuntan. Por ejemplo, si tenemos un puntero a entero `p` y le sumamos 2 (`p + 2`), el resultado serán 8 bytes después (el tamaño de un entero es 4 bytes). Por otro lado, si tenemos el puntero `p_c`, a caracter, y le sumamos esos mismos 2, `p_c + 2`, el resultado serán 2 bytes después, ya que un caracter solo usa un byte.
 
 
+[^2]: Sumar y restar enteros a un puntero permite desplazar el sitio al que apuntan en esa cantidad de "posiciones", entendiendo estas como bloques de memoria del tamaño adecuado para representar el dato al que apuntan. Por ejemplo, si tenemos un puntero a entero `p` y le sumamos 2 (`p + 2`), el resultado serán 8 bytes después (el tamaño de un entero es 4 bytes). Por otro lado, si tenemos el puntero `p_c`, a caracter, y le sumamos esos mismos 2, `p_c + 2`, el resultado serán 2 bytes después, ya que un caracter solo usa un byte.
 
-[note1]: 

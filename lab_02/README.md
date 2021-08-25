@@ -1,121 +1,155 @@
-# Algoritmos y Estructuras de Datos - Taller
+# Algoritmos y Estructuras de Datos - Taller 2
 
-*Este README.md se ve mejor con Typora o equivalente*
+## Sesión 2
 
-[toc]
+### Arreglos en C
 
-## El Taller/Laboratorio
+- Un arreglo es un tipo de dato compuesto en el que varias variables de un mismo tipo se agrupan en una sola.
 
-- Sesiones prácticas semanales.
-- Dos proyectos a lo largo del semestre: 20% de la nota de la asignatura cada una.
-- Lenguaje a utilizar: C
-- Herramientas obligatorias: GCC 10.2
-  - Los códigos el profesor los probará en Linux.
-- Herramientas opcionales:
-  - IDE de su agrado (se recomienda acostumbrarse al uso de consola).
-  - Makefile
-
-## Sesión 1
-
-### Estructuras en C
-
-- Una de las construcciones más básicas en C es la estructura (`struct`). Su objetivo es permitir que una variable combine varios (tipos de) datos en sí. Podemos definir una estructura como:
+- Su definición general es:
 
   ```C
-  struct [tag] {
-      tipo_1 valor_1;
-      tipo_2 valor_2;
-      ...;
-      tipo_n valor_n;
-  } [variable];
+  <tipo> nombre[tamaño];
   ```
-
-  Lo que permite definir la estructura con una etiqueta (`tag`) opcional, para luego declarar variables que tengan los miembros definidos. Por ejemplo, podemos definir la estructura `vector` y definir los vectores `v` y `w` con:
-
-  ```C
-  struct vector {
-      // Almacena las coordenadas del vector
-      float x;
-      float y;
-      float z;
-  } v, w;
-  ```
-
-- Una vez definida la estructura y las variables de ese tipo, podemos acceder a sus miembros usando la notación de punto:
-
-  ```C
-  /* Asigna las coordenadas de v a partir 
-   * de las de w
-   */
-  v.x = 2*w.x;
-  v.y = w.y;
-  v.z = -w.z;
-  ```
-
-  Lo que viene a continuación del punto es un dato del tipo declarado, con todo lo que ello significa.
-
-- Como puede ser que tengamos la estructura definida en un encabezado, al ser importante y/o general (ver, por ejemplo, la estructura `tm` de la biblioteca [`time.h`](https://www.tutorialspoint.com/c_standard_library/time_h.htm)), la podemos usar como tipo de dato, en cuyo caso, definimos una nueva variable usando la construcción `struct tag variable`:
-
-  ```C
-  struct vector u = {5.0, -1.5, 2.5};
-  ```
-
-  Las llaves nos permiten definir los valores iniciales de la estructura, todos a la vez.
-
-- Alternativamente, podemos usar la estructura para definir un tipo usando `typedef`:
-
-  ```C
-  typedef struct {
-      // Almacena las coordenadas del vector
-      float x;
-      float y;
-      float z;
-  } vector;
   
-  vector u, v = {5.0, -1.5, 2.5}, w;
+  Lo que permite definir un arreglo de tipo `<tipo>` y tamaño `tamaño`. Por ejemplo, para definir un arreglo de 20 enteros cortos (`short`), usamos:
+  
+  ```C
+  short my_array[20];
+  ```
+  
+- Mediante arreglos, podemos agrupar muchos valores y accederlos mediante su **posición** (ubicación) en el interior del arreglo, para lo que usamos su índice (de 0 a `tamaño-1`) entre corchetes a continuación del nombre. Por ejemplo, para añadir una cierta cantidad al quinto elemento y luego mostrarlo por pantalla, hacemos:
+
+  ``` C
+  // Como partimos de 0, la quinta posición es 4
+  my_array[4] += 10;
+  printf("%d\n", my_array[4]);
   ```
 
-- Al tener una estructura que represente un tipo de dato compuesto, podemos ya hacer operaciones sobre ellas.
+- Una característica muy importante de los arreglos es que son **estáticos**, es decir, una vez definidos, estos no pueden modificar su tamaño. Sin embargo, esto no significa que debamos conocer su tamaño de antemano. Podemos definirlo sin declarar su tamaño, dejando los corchetes de su definición en blanco, pero dándole un conjunto de valores de inicialización usando llaves y separándolos por coma:
 
-### Estructura de archivos en C
+  ```C
+  // Un arreglo de cuatro elementos 
+  // ya inicializados
+  int a[] = {1, 2, 3, 4};
+  ```
 
-- Hay principalmente dos tipos de archivos en C:
+  Por supuesto, el problema aquí es que no  tenemos el tamaño de manera explícita declarada en el arreglo.
 
-  - Código fuente, con extensión `.c`, corresponden a los que tienen las definiciones de funciones y el código a ejecutar.
+- Esto último puede significar un problema, puesto que C no provee un mecanismo para determinar cuál es el tamaño de un arreglo. Lo más cercano es el operador `sizeof`, que entrega un valor de tipo `site_t`[^1] (definido en, por ejemplo, `stdlib.h`) con la cantidad de **bytes** que ocupa el arreglo definido. A partir de esto, podemos determinar su tamaño, dividiendo dicha cantidad por la cantidad de bytes utilizados por cada elemento:
 
-  - *Headers*, con extensión `.h`, corresponden a archivos con definiciones de tipos, constantes y funciones generales que incluir desde nuestros códigos. Los incluimos en otros *headers* o en nuestros códigos fuentes con la instrucción de preprocesador `#include` de dos maneras:
+  ```C
+  /* El operador sizeof requiere paréntesis
+   * si es para medir el tamaño de un tipo de
+   * dato
+   */
+  size_t size = sizeof a/sizeof(int)
+  ```
 
-    ```C
-    /* Para incluir bibliotecas/headers
-     * del "sistema" o aquellas que estén en
-     * ubicaciones que el compilador conozca.
-     */
-    #include <módulo.h>
-    /* Para incluir bibliotecas/headers en la
-     * misma carpeta del código fuente
-     */
-    #include "módulo.h"
-    ```
+  Sin embargo, este mecanismo no funciona, por ejemplo, cuando el arreglo es el parámetro de una función: esta requerirá, si hiciese falta, el tamaño como un parámetro adicional.
 
-- Al momento de compilar, solo incluimos como parámetros de GCC los códigos fuentes, no los headers, ya que estos serán incluidos por el compilador sin necesidad de nuestra intervención.
+[^1]: El tipo `size_t` tiene una definición dependiente de la plataforma, pero, en general, corresponde a un entero largo sin signo (`unsigned long` o algo equivalente).
 
-### Ejercicio
+### Strings
 
-- Además de los propuestos en la diapositiva de la clase (ver BlackBoard), puede implementarse una biblioteca para números complejos. Un número $z$​ pertenece al conjunto de los números complejos $\mathbb{C}$​, si está formado por una parte real y una imaginaria y tiene la forma general $z = a + ib$​, en donde $a$​ corresponde a su **parte real** y $b$​​​, a si **parte imaginaria**.
+- Los **strings**, cadenas de caracteres, son arreglos de tipo `char` en C, es decir, arreglos de caracteres.
 
-- La constante imaginaria $i$​ (llamada $j$​ en algunas disciplinas, como ingeniería eléctrica o ciertas áreas de la física) es tal que $i^2 = -1$​, por lo que no tiene una representación numérica: el número complejo se representa, entonces, como un par ordenado $z = (a, b)$​, donde $a, b\in\mathbb{R}$​. Nótese que esto implica de inmediato que $\mathbb{R}\subset\mathbb{C}$ y que $z\in\mathbb{R}$ si $b=0$.
+- En C, las comillas simples son para representar caracteres, mientras que las comillas dobles, son para representar strings: `'a'`, por ejemplo, es un caracter, pero `"a"` es un string.
 
-- Un número imaginario tiene varias operaciones que debemos implementar:
+- Se diferencian de los arreglos habituales en que el compilador, si nosotros no lo hacemos, siempre le agrega el caracter nulo `\0` al final, pues este es el caracter que indica el final de un string. Esto implica dos cosas:
 
-  - Suma (o resta): $z_1 + z_2 = (a_1 + a_2, b_1 + b_2)$
-  - Multiplicación: $z_1\cdot z_2 = (a_1a_2 - b_1b_2, a_1a_2 + b_1b_2)$​, fórmula que surge de hacer la multiplicación considerando $i$ como una constante más y usando su propiedad de que $i^2 = -1$​.
-  - Multiplicación por escalar ($x\in\mathbb{R}$): $xz = (ax, bx)$
-  - Valor absoluto (módulo): $|z| = \sqrt{a^2 + b^2}$
-  - Inverso multiplicativo: si $z\neq 0$​, $z^{-1} = \left(\frac{x}{|z|^2}, -\frac{y}{|z|^2}\right)$​
-  - División: $\frac{z_1}{z_2} = z_1z_2^{-1}$
-  - Conjugado: $\bar{z} = (a, -b)$
+  - Si nuestro string necesita N caracteres, necesitamos N+1 en nuestro arreglo de caracteres.
+  - Si nuestro arreglo tiene más caracteres de los que hacen falta para llegar al caracter nulo del string, los posteriores serán ignorados.
 
-  Varias de estas operaciones se pueden escribir a partir de otras, por ejemplo, el valor absoluto se puede escribir como $|z| = \sqrt{z\bar{z}}$.
+- Por ejemplo, podemos necesitar un string corto:
 
-- Implemente una estructura para representar a un número complejo y las funciones necesarias para poder hacer las operaciones señaladas sobre los números complejos. Note que varias de las operaciones están definidas en función de otras: aproveche este hecho, para reutilizar el código ya escrito en otras de las funciones.
+  ```C
+  // Necesitamos el caracter extra para '\ 0'
+  char texto_1[5] = "holi"
+  ```
+
+  O un string un poco más largo, suficiente como para almacenar una cadena de tamaño considerable:
+
+  ```C
+  // Dejamos más espacio del que necesitamos
+  char buffer[50] = "Un texto largo, pero no tanto"
+  ```
+
+  O dejamos que el mismo compilador determine cuántos caracteres necesitamos:
+
+  ```C
+  // El compilador añade '\0' y su tamaño
+  char text[] = "A la víbora de la mar, por aquí puede pasar"
+  ```
+
+- La característica de terminar con el caracter nulo puede ser aprovechada para determinar cuántos caracteres tiene un string sin necesidad de saberlo de antemano. Por ejemplo, podemos hacer:
+
+  ```C
+  size_t length = 0;
+  while (text[length] != '\0'){
+      length++;
+  }
+  ```
+
+  Tras el ciclo, `length` tiene la cantidad de caracteres en el string.
+
+- Una alternativa muy útil es utilizar la biblioteca `string.h`, que contiene varias operaciones comunes sobre strings, como copias, concatenación de strings, comparación, etc. Particularmente, contiene la instrucción `strlen`, que permite determinar el tamaño del string:
+
+  ```C
+  #import <string.h>
+  // El resto del código va aquí
+  size_t length = strlen(text);
+  ```
+
+### Arreglos como Punteros 
+
+- Una característica muy importante de los arreglos es que sus nombres son ***punteros*** al primer elemento de estos. Cuando utilizamos uno como parámetro de una función, en realidad, estamos pasando la dirección al primero de sus elementos. Así, un encabezado de función que utiliza punteros es, por ejemplo,  como este:
+
+  ```C
+  // Función que busca un término en un arreglo
+  int search(float* array, float term, int size);
+  ```
+
+  El parámetro `size` es pedido para poder saber hasta qué elemento puedo recorrer el arreglo. Dentro de la función, este arreglo puede ser utilizado como un puntero, utilizando el álgebra de estos[^2]. Por ejemplo, para verificar si el elemento está dentro del arreglo, podemos hacer:
+
+  ```C
+  // i lo definimos como el iterador para acceder
+  // al arreglo
+  if( *(array+i) == term ) return i;
+  ```
+
+  De modo que desplazamos la posición del arreglo en `i` posiciones. Esto es equivalente a acceder mediante la notación normal de arreglo:
+
+  ```C
+  if( array[i] == term ) return i;
+  ```
+
+- Esta idea la podemos aplicar un poco "a la inversa": si tenemos un puntero para cierto tipo de dato, podemos inicializarlo de manera dinámica mediante `malloc` (en `stdlib.h`). Esto sirve tanto si necesitamos un valor para dicho puntero, como si necesitamos una **colección** de valores para este, es decir, si necesitamos un arreglo. Por ejemplo,
+
+  ```C
+  #include <stdio.h>
+  // El resto del código va aquí
+  // Inicializamos el puntero.
+  /* NULL es una constante "vacía" (0, básicamente) 
+   * que permite dar un valor inicial al puntero.
+   * No es estrictamente necesario, pero sí 
+   * buena práctica el inicializar los punteros.
+  */
+  int *p=NULL, *array=NULL;
+  unsigned int size = 20;
+  // Inicializa un único valor
+  p = (int*)malloc(sizeof(int));
+  // Inicializa un bloque de memoria para 20 enteros
+  array = (int*)malloc(sizeof(int)*size);
+  
+  // Luego, podemos asignarle valores
+  *p = 10;
+  array[10] = *p;
+  ```
+
+- El gran problema surgido de esta aproximación, claro, es que, como se señala antes, no hay forma de saber cuántos elementos tiene el arreglo generado así. Hemos de tener un registro muy cuidadoso de dónde almacenaremos el tamaño del arreglo, de modo que esté disponible para cuando lo necesitemos, de otro modo, podríamos incurrir en violaciones de segmento (*segmentation fault* o **segfault**, ocurrida porque nuestro programa intenta acceder zonas de memoria que no le están permitidas).
+
+
+
+[^2]: Sumar y restar enteros a un puntero permite desplazar el sitio al que apuntan en esa cantidad de "posiciones", entendiendo estas como bloques de memoria del tamaño adecuado para representar el dato al que apuntan. Por ejemplo, si tenemos un puntero a entero `p` y le sumamos 2 (`p + 2`), el resultado serán 8 bytes después (el tamaño de un entero es 4 bytes). Por otro lado, si tenemos el puntero `p_c`, a caracter, y le sumamos esos mismos 2, `p_c + 2`, el resultado serán 2 bytes después, ya que un caracter solo usa un byte.
 

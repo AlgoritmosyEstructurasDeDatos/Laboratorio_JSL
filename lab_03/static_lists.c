@@ -54,9 +54,20 @@ void list_insert(data_type *l, uint_t *n, data_type x, uint_t pos){
 
 // Muestra los elementos de la lista separados por coma
 void show_list(data_type *l, uint_t n){
+    putchar('[');
     for(int i=0; i < n-1; i++)
         printf("%d, ", l[i]);
-    printf("%d\n", l[n-1]);
+    printf("%d]\n", l[n-1]);
+}
+
+void list_insert_at_first(data_type *l, uint_t *n, data_type x){
+    if (*n == MAX_LENGTH) return;
+    
+    for(int i=*n-1; i >= 0; i--)
+        l[i+1] = l[i];
+    
+    l[0] = x;
+    (*n)++;
 }
 
 int main(){
@@ -68,6 +79,8 @@ int main(){
     show_list(list, length);
     list_delete_last(list, &length);
     show_list(list, length);
+    
+    list_insert_at_first(list, &length, 0);
     
     list_insert(list, &length, 5, 3);
     show_list(list, length);

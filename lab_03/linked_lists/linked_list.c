@@ -18,6 +18,8 @@ p_node create_node(data_type x){
     strcpy(n->key, x);
     // Inicializa el puntero a próximo especificando que sea NULL
     n->next = NULL;
+    
+    return n;
 }
 
 void free_node(p_node n){
@@ -121,7 +123,7 @@ p_node list_previous_node(p_node list, data_type x){
     
     // Estas líneas son equivalentes al operador ternario "a? b:c"
     // Su objetivo es devolver NULL si no se encontró el valor buscado.
-//     if previous->next == NULL)
+//     if (previous->next == NULL)
 //         return NULL
 //     return previous;
     // En este operador, a?b:c, si a es verdadero, resulta b; de otro modo, resulta c

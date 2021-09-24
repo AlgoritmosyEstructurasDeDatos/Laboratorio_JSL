@@ -89,9 +89,9 @@ void empty_stack(p_stack s){
 
 int main(){
     // String no equilibrado
-//     char* S = "ABAAAABBBAABABABABABBBBBAAAABBABABABBBAAAAA";
+    char* S = "ABAAAABBBAABABABABABBBBBAAAABBABABABBBAAAAA";
     // String equilibrado
-    char* S = "AABBAABB";
+//     char* S = "AABBAABB";
     
     // Stacks para A's y B's
     p_stack p_a = NULL, p_b = NULL;

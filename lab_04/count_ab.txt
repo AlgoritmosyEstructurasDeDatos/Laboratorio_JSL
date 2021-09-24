@@ -1,10 +1,10 @@
 L'algoritmo...
-Entrada: s (string)
+Entrada: S (string)
 
 p_A = crear_pila();
 p_B = crear_pila();
 
-s = AABBAABBA
+// S = AABBAABBAB
 
 para cada letra en S:
     si la letra es "A",
@@ -20,3 +20,20 @@ si p_A está vacía y p_B está vacía
     retorna la cantidad es igual (= 0)
 sino
     retorna la cantidad no es igual (= -1)
+
+    
+//////////////////////////////////////////////////////
+// Con un solo stack
+
+para cada letra en S:
+    si la letra es "A":
+        pila.push(letra)
+
+para cada letra en S;
+    si la letra es "B":
+        pila.pop()
+        
+si pila está vacía:
+    retorna la cantidad es igual
+sino
+    retorna la cantidad no es igual

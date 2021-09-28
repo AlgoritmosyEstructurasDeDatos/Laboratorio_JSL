@@ -5,7 +5,7 @@
 #include <string.h>
 
 // Interfaz para los nodos
-node* new_node(int value){
+node* new_node(uint_t value){
     node* n = (node*)malloc(sizeof(node));
     
     if(!n) return NULL;
@@ -38,7 +38,7 @@ list* create_list(){
 }
 
 
-void insert_first(list* l, int value){
+void insert_first(list* l, uint_t value){
     node* n = new_node(value);
     
     // La cabeza antigua ahora es el segundo elemento
@@ -51,7 +51,7 @@ void insert_first(list* l, int value){
 }
 
 
-void insert_last(list* l, int value){
+void insert_last(list* l, uint_t value){
     node* n = new_node(value);
     
     // Cuando es el primer elemento insertado, también insertamos la cabeza
@@ -71,7 +71,7 @@ void insert_last(list* l, int value){
 }
 
 
-void delete_node(list* l, int value){
+void delete_node(list* l, uint_t value){
     // Si la lista está en blanco, no hay nada que borrar
     if (l->len == 0) return;
     node *n = l->head;

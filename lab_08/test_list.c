@@ -9,10 +9,7 @@ int main(){
     for(int i = 0; i <= 200; i+=10){
         insert_last(l, i);
     }
-//     insert_first(l, 10);
-//     insert_last(l, 20);
-//     
-//     putchar('\n');
+
     char* output = list_to_string(l);
     printf("%s\n", output);
     free(output);

@@ -4,6 +4,7 @@
 #include "uintlist.h"
 
 #include <stdlib.h>
+#include <stdio.h>
 
 graph* create_graph(uint_t n){
     graph* g = (graph*)malloc(sizeof(graph));
@@ -69,4 +70,15 @@ bool is_edge(graph* g, edge e){
     }
     
     return false;
+}
+
+
+void show_graph(graph* g){
+    printf("Grafo de orden %d y tamaño %d:\n",
+           g->n_vertices, g->n_edges);
+    for(int i = 0; i < g->n_vertices; i++){
+        char *adjacent_vertices = list_to_string(&g->vertices[i]);
+        printf("%d: %s\n", i, adjacent_vertices);
+        free(adjacent_vertices);
+    }
 }

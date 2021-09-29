@@ -30,4 +30,6 @@ bool is_edge(graph*, edge);
 
 void delete_graph(graph*);
 
+void show_graph(graph*);
+
 #endif

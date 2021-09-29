@@ -5,14 +5,16 @@
 
 #include <stdbool.h>
 
+typedef unsigned int uint_t;
+
 typedef struct {
-    unsigned int u,
-    unsigned int v,
+    uint_t u;
+    uint_t v;
 } edge;
 
 typedef struct {
-    unsigned int n_vertices;
-    unsigned int n_edges;
+    uint_t n_vertices;
+    uint_t n_edges;
     list *vertices;
 } graph;
 
@@ -20,7 +22,7 @@ typedef struct {
 // Interfaz para el grafo
 //--------------------------------------------------
 
-graph* create_graph(int);
+graph* create_graph(uint_t);
 void insert_edge(graph*, edge);
 void delete_edge(graph*, edge);
 

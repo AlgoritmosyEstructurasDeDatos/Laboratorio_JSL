@@ -7,6 +7,7 @@
 
 typedef unsigned int uint_t;
 
+// Estructura de conveniencia para representar las aristas
 typedef struct {
     uint_t u;
     uint_t v;

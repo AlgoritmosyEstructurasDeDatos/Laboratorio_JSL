@@ -147,6 +147,14 @@ char* list_to_string(list* l){
      * y todas sus operaciones para crear el dato final. La desventaja es que
      * el que llama a la función debe encargarse de la memoria asociada, ya que
      * el búfer es dinámico.
+     * 
+     * Podemos crear una versión alternativa, en cuyo caso pedimos un puntero
+     * a string y un puntero a entero sin signo (o size_t). En ese caso, usamos
+     * ese puntero a string (que es un puntero a puntero a char, char**) como
+     * búfer de salida y ponemos el tamaño total (caracteres escritos) en el
+     * puntero a entero, de modo que todo lo que sea alocación original de memoria
+     * (malloc inicial) y liberación (free) quede a cargo del que llama a la
+     * función.
      */
     
     // Toma la cabeza de la lista, si no hay, retorna un puntero a string vacío

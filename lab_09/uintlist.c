@@ -156,7 +156,7 @@ node* find_in_list(list* l, uint_t x){
 
 // Verifica si la lista contiene un elemento dado
 bool is_in_list(list* l, uint_t x){
-    return find_in_list(l, x) == NULL;
+    return find_in_list(l, x) != NULL;
 }
 
 

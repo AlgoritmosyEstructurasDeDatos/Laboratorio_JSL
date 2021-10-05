@@ -160,7 +160,6 @@ bool is_in_list(list* l, uint_t x){
 }
 
 
-
 char* list_to_string(list* l){
     /* Esta función creará un buffer para el string y lo devolverá.
      * La ventaja de esto es que la función se encarga de manejar el string

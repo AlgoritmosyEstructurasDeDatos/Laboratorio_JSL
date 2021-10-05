@@ -141,6 +141,26 @@ void delete_list(list* l){
 }
 
 
+// Obtiene el nodo en que existe un elemento
+// Retorna nulo cuando no lo encuentra, y el nodo en el que está, en caso
+// contrario
+node* find_in_list(list* l, uint_t x){
+    node* n = l->head;
+    for(int i=0; i < l->len; i++){
+        if(n->value == x) return n;
+        n = n->next;
+    }
+    
+    return NULL;
+}
+
+// Verifica si la lista contiene un elemento dado
+bool is_in_list(list* l, uint_t x){
+    return find_in_list(l, x) == NULL;
+}
+
+
+
 char* list_to_string(list* l){
     /* Esta función creará un buffer para el string y lo devolverá.
      * La ventaja de esto es que la función se encarga de manejar el string

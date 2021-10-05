@@ -1,6 +1,8 @@
 #ifndef __UINTLIST_H__
 #define __UINTLIST_H__
 
+#include <stdbool.h>
+
 typedef unsigned int uint_t;
 
 typedef struct node_int *link;
@@ -36,6 +38,12 @@ void insert_first(list*, uint_t);
 void insert_last(list*, uint_t);
 // Borra un elemento de la lista
 void delete_element(list*, uint_t);
+
+// Obtiene el nodo en que existe un elemento
+node* find_in_list(list*, uint_t);
+
+// Verifica si la lista contiene un elemento dado
+bool is_in_list(list*, uint_t);
 
 // Vacía la lista
 void empty_list(list*);

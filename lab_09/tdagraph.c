@@ -1,7 +1,6 @@
 #include "tdagraph.h"
 
-// Por completitud, aunque no es necesario, porque está incluido en tdagraph.h
-#include "uintlist.h"
+#include "uintqueue.h"
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -120,4 +119,32 @@ void show_graph(graph* g){
         // Libera la memoria usada por el string
         free(adjacent_vertices);
     }
+}
+
+
+uint_t* bfs(graph* g, uint_t start, uint_t goal){
+    uintqueue *q = create_queue();
+    list *visited = create_list();
+    
+    uint_t* parents = (uint_t*)malloc(sizeof(uint_t)*g->n_vertices);
+    parents[start] = start;
+    insert_first(visited, start);
+    enqueue(q, start);
+    
+    while (q->head){
+        uint_t u = dequeue(q);
+        
+        node *v = g->vertices[u].head;
+        for(int i=0; i < g->vertices[u].len; i++){
+            if(!is_in_list(visited, v->value)){
+                insert_first(visited, v->value);
+                parents[v->value] = u;
+                if (v->value == goal) return parents;
+                enqueue(q, v->value);
+            }
+            v = v->next;
+        }
+    }
+    free(parents);
+    return NULL;
 }

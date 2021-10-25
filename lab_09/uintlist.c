@@ -21,7 +21,7 @@ node* new_node(uint_t value){
 
 void free_node(node* n){
     // Un simple wrapper para el free
-    free(n);
+    if(n) free(n);
 }
 
 
@@ -44,12 +44,18 @@ void insert_first(list* l, uint_t value){
     // crea un nodo
     node* n = new_node(value);
     
+    // Cuando es el primer elemento insertado, debemos insertar, también, en la cola
+    if(!l->tail) l->tail = n;
+    
+    if(l->head){
+        l->head->previous = n;
+    }
     // La cabeza antigua ahora es el segundo elemento (apuntado por el nuevo nodo)
     n->next = l->head;
     // La cabeza es el nuevo nodo
     l->head = n;
-    // Cuando es el primer elemento insertado, debemos insertar, también, en la cola
-    if(!l->tail) l->tail = n;
+//     printf("%lx, %lx, %lx, %lx, %lx\n", n, n->previous, n->next, l->head, l->tail);
+    
     // Aumenta el total de elementos
     l->len++;
 }

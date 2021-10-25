@@ -11,9 +11,14 @@ int main(){
     // Muestra el grafo con la función definida para eso
     show_graph(g);
     
-    uint_t *path = bfs(g, 2, 4);
+    uint s = 2, e = 8;
+    uint_t *path = dfs(g, s, e);
     
-    printf("Se llega a 4 desde %u\n", path[4]);
+    for(int i = 0; i < g->n_vertices; i++)
+        printf("%u\n", path[i]);
+    
+    for(uint_t i=e; i != path[i]; i = path[i])
+        printf("Se llega a %u desde %u\n", i, path[i]);
     // Borra el grafo
     delete_graph(g);
     

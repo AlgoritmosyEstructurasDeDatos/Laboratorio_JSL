@@ -8,10 +8,10 @@ typedef list uintqueue;
 
 // Operaciones de cola
 // Crea la cola
-#define create_queue() create_list();
+#define create_queue() create_list()
 
 // Encola y desencola
-#define enqueue(q, v) insert_last(q, v);
+#define enqueue(q, v) insert_last(q, v)
 uint_t dequeue(uintqueue*);
 
 // Elimina la cola

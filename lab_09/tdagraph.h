@@ -34,5 +34,6 @@ void delete_graph(graph*);
 void show_graph(graph*);
 
 uint_t* bfs(graph*, uint_t, uint_t);
+uint_t* dfs(graph*, uint_t, uint_t);
 
 #endif

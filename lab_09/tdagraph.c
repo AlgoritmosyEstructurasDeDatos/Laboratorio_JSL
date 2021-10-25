@@ -1,6 +1,7 @@
 #include "tdagraph.h"
 
 #include "uintqueue.h"
+#include "uintstack.h"
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -124,11 +125,15 @@ void show_graph(graph* g){
 
 uint_t* bfs(graph* g, uint_t start, uint_t goal){
     uintqueue *q = create_queue();
-    list *visited = create_list();
+//     list *visited = create_list();
+    uint_t visited[g->n_vertices];
+    for(int i = 0; i < g->n_vertices; i++)
+        visited[i] = 0;
     
-    uint_t* parents = (uint_t*)malloc(sizeof(uint_t)*g->n_vertices);
+    uint_t* parents = (uint_t*)calloc(sizeof(uint_t), g->n_vertices);
     parents[start] = start;
-    insert_first(visited, start);
+//     insert_first(visited, start);
+    visited[start] = 1;
     enqueue(q, start);
     
     while (q->head){
@@ -136,15 +141,58 @@ uint_t* bfs(graph* g, uint_t start, uint_t goal){
         
         node *v = g->vertices[u].head;
         for(int i=0; i < g->vertices[u].len; i++){
-            if(!is_in_list(visited, v->value)){
-                insert_first(visited, v->value);
+//             if(!is_in_list(visited, v->value)){
+//                 insert_first(visited, v->value);
+            if(visited[v->value] == 0){
+                visited[v->value] = 1;
                 parents[v->value] = u;
-                if (v->value == goal) return parents;
+                if (v->value == goal) {
+//                     delete_list(visited);
+//                     delete_queue(q);
+                    return parents;
+                }
                 enqueue(q, v->value);
             }
             v = v->next;
         }
     }
+    
+//     delete_list(visited);
+    delete_queue(q);
+    free(parents);
+    return NULL;
+}
+
+uint_t* dfs(graph* g, uint_t start, uint_t goal){
+    uintstack *s = create_stack(g->n_vertices);
+    uint_t visited[g->n_vertices];
+    for(int i = 0; i < g->n_vertices; i++)
+        visited[i] = 0;
+    
+    uint_t* parents = (uint_t*)calloc(sizeof(uint_t), g->n_vertices);
+    parents[start] = start;
+    visited[start] = 1;
+    push(s, start);
+    
+    while (s->top > 0){
+        uint_t u = pop(s);
+        
+        node *v = g->vertices[u].head;
+        for(int i=0; i < g->vertices[u].len; i++){
+            if(visited[v->value] == 0){
+                visited[v->value] = 1;
+                parents[v->value] = u;
+                if (v->value == goal) {
+                    delete_stack(s);
+                    return parents;
+                }
+                push(s, v->value);
+            }
+            v = v->next;
+        }
+    }
+    
+    delete_stack(s);
     free(parents);
     return NULL;
 }

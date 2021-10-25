@@ -3,9 +3,9 @@ CC = gcc
 CFLAGS = -Wall -g
 
 # Dependencias principales
-DEPS = uintlist.h tdagraph.h graphloader.h uintqueue.h
+DEPS = uintlist.h tdagraph.h graphloader.h uintqueue.h uintstack.h
 # Objetos a generar
-OBJECTS = uintlist.o tdagraph.o graphloader.o uintqueue.o
+OBJECTS = uintlist.o tdagraph.o graphloader.o uintqueue.o uintstack.o
 
 # Regla para código objeto (archivos compilados, pero no enlazados en un
 # ejecutable, a partir de ellos se generan módulos precompilados y, de paso,

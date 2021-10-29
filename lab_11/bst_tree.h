@@ -25,5 +25,7 @@ void inorder_tree_walk(const node*);
 
 void show(node*, int);
 
+void tree_empty(node*);
+
 
 #endif

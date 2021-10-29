@@ -4,6 +4,7 @@
 
 int main(void) {
   bst_tree T;
+  T.root = 0;
   
   tree_insert(&T, 10);
   tree_insert(&T, 2);
@@ -22,12 +23,15 @@ int main(void) {
   
   printf("El nodo más pequeño es %d\n", tree_minimum(&T));
   
-  if(tree_search(T.root, 13))
-      puts("El valor 13 está en el árbol.");
+  int x = 21;
+  if(tree_search(T.root, x))
+      printf("El valor %d está en el árbol.\n", x);
   else
-      puts("No está el valor 13.");
-  
+      printf("No está el valor %d.\n", x);
+//   
   show(T.root, 0);
+  
+  tree_empty(T.root);
 
   return 0;
 }

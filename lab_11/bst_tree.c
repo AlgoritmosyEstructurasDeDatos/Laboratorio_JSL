@@ -34,7 +34,7 @@ void tree_insert(bst_tree* T, int z){
         parent->left = new_node;
     else
         parent->right = new_node;
-}
+} // fin tree_insert
 
 
 int tree_minimum(const bst_tree* T){
@@ -84,3 +84,11 @@ void show(node* x, int h){
     show(x->left, h+1);
 }
 
+
+void tree_empty(node* n){
+    if(n){
+        tree_empty(n->left);
+        tree_empty(n->right);
+        free(n);
+    }
+}

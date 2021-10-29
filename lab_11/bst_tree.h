@@ -23,5 +23,7 @@ const node* tree_search(const node*, const int);
 
 void inorder_tree_walk(const node*);
 
+void show(node*, int);
+
 
 #endif

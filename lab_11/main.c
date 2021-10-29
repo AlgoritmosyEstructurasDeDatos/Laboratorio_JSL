@@ -26,6 +26,8 @@ int main(void) {
       puts("El valor 13 está en el árbol.");
   else
       puts("No está el valor 13.");
+  
+  show(T.root, 0);
 
   return 0;
 }

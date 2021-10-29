@@ -14,6 +14,7 @@ node* create_node(int x){
   return n;
 }
 
+
 void tree_insert(bst_tree* T, int z){
     node* parent = NULL;
     node* x = T->root;
@@ -63,3 +64,23 @@ void inorder_tree_walk(const node* n){
     inorder_tree_walk(n->right);
   }
 }
+
+
+void printnode(int value, int h){
+    for(int i = 0; i<h;i++) printf("   ");
+    printf("%3d\n", value);
+}
+
+
+void show(node* x, int h){
+    if (!x){
+        for(int i=0; i<h; i++) printf("   ");
+        puts("*");
+        return;
+    }
+    
+    show(x->right, h+1);
+    printnode(x->key, h);
+    show(x->left, h+1);
+}
+

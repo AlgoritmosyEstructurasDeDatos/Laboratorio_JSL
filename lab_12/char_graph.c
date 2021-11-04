@@ -8,6 +8,7 @@ char_graph* create_graph(const uint_t n, const char v[]){
     
     g->V = n;
     g->E = 0;
+    g->is_digraph = false;
     
     g->vertices = (char*)malloc(sizeof(char)*g->V);
     
@@ -58,6 +59,19 @@ char_graph* create_graph(const uint_t n, const char v[]){
 }
 
 
+// Convierte el grafo en digrafo
+// Ninguna de estas funciones modifica las aristas, solo cambian cómo se insertan
+void set_digraph(char_graph* g){
+    g->is_digraph = true;
+}
+
+
+// Convierte el grafo en no dirigido
+void unset_digraph(char_graph* g){
+    g->is_digraph = false;
+}
+
+
 void delete_graph(char_graph* g){
     // Esta versión libera el bloque de memoria pedido en un solo malloc
     //free(g->edges[0]);
@@ -86,7 +100,7 @@ edge new_edge(const uint_t u, const uint_t v, const int* w){
 // Inserta una arista en el grafo no dirigido
 uint_t insert_edge(char_graph* g, edge e){
     g->edges[e.u][e.v] = e.w;
-    g->edges[e.v][e.u] = e.w;
+    if(!g->is_digraph) g->edges[e.v][e.u] = e.w;
     g->E++;
     
     return g->E;
@@ -96,7 +110,7 @@ uint_t insert_edge(char_graph* g, edge e){
 // Remueve la arista en el grafo no dirigido
 uint_t remove_edge(char_graph* g, uint_t u, uint_t v){
     g->edges[u][v] = 0;
-    g->edges[v][u] = 0;
+    if(!g->is_digraph) g->edges[v][u] = 0;
     g->E--;
     
     return g->E;

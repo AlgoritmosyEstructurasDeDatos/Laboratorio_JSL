@@ -103,6 +103,7 @@ uint_t remove_edge(char_graph* g, uint_t u, uint_t v){
 }
 
 
+// Obtiene el grado del vértice
 uint_t get_vertex_degree(const char_graph* g, const uint_t u){
     uint_t degree = 0;
     for(int i = 0; i < g->V; i++)
@@ -113,12 +114,14 @@ uint_t get_vertex_degree(const char_graph* g, const uint_t u){
 }
 
 
+// Obtiene un arreglo con los índices de vértices adyacentes
 uint_t* get_adjascent_vertices(const char_graph* g, 
                                const uint_t u){
     uint_t degree = get_vertex_degree(g, u);
     
     uint_t* adjacent = (uint_t*)malloc(sizeof(uint_t)*degree);
-    
+
+    // Añade solo los vértices no vacíos
     for(int i = 0, j = 0; i < g->V; i++)
         if(g->edges[u][i] != 0)
             adjacent[j] = i;

@@ -14,16 +14,44 @@ char_graph* create_graph(const uint_t n, const char v[]){
     for(int i=0; i < g->V; i++)
         g->vertices[i] = v[i];
     
-    g->edges = (int**)calloc(g->V, sizeof(int));
+    // Espacio para el arreglo de punteros. El espacio a pedir es suficiente
+    // para almacenar los punteros que necesitamos.
+    g->edges = (int**)malloc(g->V * sizeof(int*));
     if(!g->edges){
-        fprintf(stderr, "No hay memoria D:");
+        fprintf(stderr, "Error de memoria");
+        free(g->vertices);
+        free(g);
         return NULL;
     }
+
+    /*
+     * Mediante esta estrategia, solo llamamos a malloc dos veces: una para
+     * el arreglo de punteros y otra para pedir el bloque completo de la matriz.
+     * Además, nos da la ventaja de que la matriz quedará en un bloque contiguo de
+     * memoria, mientras que la otra versión podría tener algunas filas en lugares
+     * diferentes.
+     * 
+     * La complicación de esta versión es poner en el lugar correcto cada puntero,
+     * para lo que hay que saber que, en una matriz de NxM, la fila i (de 0 a N-1)
+     * comienza en la posición i*M.
+     */
+//     int *region = (int*)malloc(g->V*g->V*sizeof(int));
+//     for(int i = 0; i < g->V; i++) g->edges[i] = region+(i*g->V);
     
+    // Inicializa la matriz
     for(int i = 0; i < g->V; i++){
-        g->edges[i] = (int*)calloc(g->V, sizeof(int));
-        if(!g->edges[i]) printf("error");
-//         printf("%lu", g->edges[i]);
+        // Espacio para cada arreglo de enteros (fila
+        g->edges[i] = (int*)malloc(g->V * sizeof(int));
+        // Chequeo de errores
+        if(!g->edges[i]){
+            fprintf(stderr, "Error de memoria");
+            for(i = i-1; i >= 0; i--) free(g->edges[i]);
+            free(g->vertices);
+            free(g);
+            return NULL;
+        }
+        // Inicializa la fila en 0
+        for(int j= 0; j < g->V; j++) g->edges[i][j] = 0;
     }
     
     return g;
@@ -31,12 +59,18 @@ char_graph* create_graph(const uint_t n, const char v[]){
 
 
 void delete_graph(char_graph* g){
+    // Esta versión libera el bloque de memoria pedido en un solo malloc
+    //free(g->edges[0]);
+    
+    // Libera las filas
+    for(int i= 0; i < g->V; i++) free(g->edges[i]);
     free(g->edges);
     free(g->vertices);
     free(g);
 }
 
 
+// Crea una nueva arista. Si w == NULL, supone peso 1
 edge new_edge(const uint_t u, const uint_t v, const int* w){
     edge e;
     if(w) e.w = *w;
@@ -49,6 +83,7 @@ edge new_edge(const uint_t u, const uint_t v, const int* w){
 }
 
 
+// Inserta una arista en el grafo no dirigido
 uint_t insert_edge(char_graph* g, edge e){
     g->edges[e.u][e.v] = e.w;
     g->edges[e.v][e.u] = e.w;
@@ -58,6 +93,7 @@ uint_t insert_edge(char_graph* g, edge e){
 }
 
 
+// Remueve la arista en el grafo no dirigido
 uint_t remove_edge(char_graph* g, uint_t u, uint_t v){
     g->edges[u][v] = 0;
     g->edges[v][u] = 0;

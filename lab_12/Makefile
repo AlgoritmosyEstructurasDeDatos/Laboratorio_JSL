@@ -8,8 +8,8 @@ default:all
 all:gtest
 
 gtest:main.c $(SOURCES)
-	$(CC) -o $@ $< $(SOURCES)
+	$(CC) -o $@ $< $(SOURCES) $(CFLAGS)
 
 .PHONY:clean
 clean:
-	rm *~ *.o
+	rm -f *~ *.o

@@ -16,6 +16,11 @@ int main(){
     insert_edge(g, e);
     e = new_edge(6, 1, NULL);
     insert_edge(g, e);
+    int w = 2;
+    insert_edge(g, new_edge(2, 4, &w));
+    insert_edge(g, new_edge(1, 4, &w));
+    insert_edge(g, new_edge(3, 1, &w));
+    insert_edge(g, new_edge(7, 1, NULL));
     
     // Muestra la matriz del grafo
     for(int i=0; i < g->V; i++)

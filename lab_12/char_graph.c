@@ -137,8 +137,10 @@ uint_t* get_adjascent_vertices(const char_graph* g,
 
     // Añade solo los vértices no vacíos
     for(int i = 0, j = 0; i < g->V; i++)
-        if(g->edges[u][i] != 0)
+        if(g->edges[u][i] != 0){
             adjacent[j] = i;
+            j++;
+        }
         
     return adjacent;
 }

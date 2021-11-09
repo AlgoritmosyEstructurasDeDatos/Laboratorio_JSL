@@ -32,7 +32,12 @@ void pqueue_append(pqueue* queue, const float k, const int v){
     queue->root = pqueue_insert(queue->root, new);
 }
 
-int tree_minimum(pqueue*);
+qnode* tree_minimum(qnode* x){
+    while(x->left)
+        x = x->left;
+    return x;
+}
+
 const qnode* tree_search(const qnode* x, const int k){
     if(!x || x->key == k)
         return x;
@@ -70,5 +75,34 @@ void transplant(pqueue* T, qnode* u, qnode* v){
     if(!u->p) T->root = v;
     else if(u == u->p->left) u->p->left = v;
     else u->p->right = v;
+    
     if(v) v->p = u->p;
+}
+
+
+void pqueue_delete_node(pqueue* T, qnode* z){
+    if(!z->left)
+        transplant(T, z, z->right);
+    else if(!z->right)
+        transplant(T, z, z->left);
+    else{
+        qnode* y = tree_minimum(z->right);
+        if(y->p != z){
+            transplant(T, y, y->right);
+            y->right = z->right;
+            y->right->p = y;
+        }
+        transplant(T, z, y);
+        y->left = z->left;
+        y->left->p = y;
+    }
+}
+
+
+int pqueue_extract_min(pqueue* q){
+    qnode* min = tree_minimum(q->root);
+    pqueue_delete_node(q, min);
+    int value = min->value;
+    free(min);
+    return value;
 }

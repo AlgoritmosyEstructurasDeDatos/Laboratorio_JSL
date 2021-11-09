@@ -20,12 +20,17 @@ typedef struct {
 
 void pqueue_append(pqueue*, const float, const int);
 
-int tree_minimum(pqueue*);
+qnode* tree_minimum(qnode* x);
+
+int pqueue_extract_min(pqueue*);
+
 const qnode* tree_search(const qnode*, const int);
 bool pqueue_contains(const pqueue*, const int);
 
 void inorder_tree_walk(const qnode*);
 
 void tree_empty(qnode*);
+void pqueue_delete_node(pqueue*, qnode*);
+
 
 #endif

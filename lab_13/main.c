@@ -8,7 +8,13 @@ int main(){
     
     pqueue_append(&q, 0, 10);
     pqueue_append(&q, 2.5, 20);
-    pqueue_append(&q, -2.5, 10);
+    pqueue_append(&q, -2.5, 30);
+    pqueue_append(&q, 3, 1);
+    pqueue_append(&q, 4, 2);
+    pqueue_append(&q, 2.6, 5);
+    pqueue_append(&q, -1.2, 10);
+    
+    printf("%d\n", pqueue_extract_min(&q));
     
     inorder_tree_walk(q.root);
     putchar('\n');

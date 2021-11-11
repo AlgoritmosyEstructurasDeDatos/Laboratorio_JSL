@@ -18,12 +18,18 @@ qnode* create_node(const float k, const int v){
 
 
 qnode* pqueue_insert(qnode* root, qnode* x){
-    if(!root)
+    if(!root){
         root = x;
-    else if(x->key < root->key)
+        x->p = root;
+    }
+    else if(x->key < root->key){
         root->left = pqueue_insert(root->left, x);
-    else
+        root->left->p = root;
+    }
+    else{
         root->right = pqueue_insert(root->right, x);
+        root->right->p = root;
+    }
     return root;
 }
 

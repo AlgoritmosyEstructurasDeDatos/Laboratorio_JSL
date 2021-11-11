@@ -14,10 +14,14 @@ int main(){
     pqueue_append(&q, 2.6, 5);
     pqueue_append(&q, -1.2, 10);
     
-    printf("%d\n", pqueue_extract_min(&q));
+    inorder_tree_walk(q.root);
+    putchar('\n');
+    
+    printf("Mínima prioridad: %d\n", pqueue_extract_min(&q));
     
     inorder_tree_walk(q.root);
     putchar('\n');
     
+    tree_empty(q.root);
     return 0;
 }

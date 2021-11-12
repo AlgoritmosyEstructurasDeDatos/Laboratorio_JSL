@@ -45,12 +45,14 @@ qnode* tree_minimum(qnode* x){
 }
 
 const qnode* tree_search(const qnode* x, const int k){
-    if(!x || x->key == k)
-        return x;
-    else if(k < x->key)
-        return tree_search(x->left, k);
-    else
-        return tree_search(x->right, k);
+    if(x){
+        if(x->value == k) return x;
+        else {
+            const qnode* result = tree_search(x->left, k);
+            if(result) return result;
+            else return tree_search(x->right, k);
+        }
+    } else return NULL;
 }
 
 

@@ -17,7 +17,7 @@ char_graph* create_graph(const uint_t n, const char v[]){
     
     // Espacio para el arreglo de punteros. El espacio a pedir es suficiente
     // para almacenar los punteros que necesitamos.
-    g->edges = (int**)malloc(g->V * sizeof(int*));
+    g->edges = (float**)malloc(g->V * sizeof(float*));
     if(!g->edges){
         fprintf(stderr, "Error de memoria");
         free(g->vertices);
@@ -42,7 +42,7 @@ char_graph* create_graph(const uint_t n, const char v[]){
     // Inicializa la matriz
     for(int i = 0; i < g->V; i++){
         // Espacio para cada arreglo de enteros (fila
-        g->edges[i] = (int*)malloc(g->V * sizeof(int));
+        g->edges[i] = (float*)malloc(g->V * sizeof(float));
         // Chequeo de errores
         if(!g->edges[i]){
             fprintf(stderr, "Error de memoria");
@@ -52,7 +52,7 @@ char_graph* create_graph(const uint_t n, const char v[]){
             return NULL;
         }
         // Inicializa la fila en 0
-        for(int j= 0; j < g->V; j++) g->edges[i][j] = 0;
+        for(int j= 0; j < g->V; j++) g->edges[i][j] = 0.;
     }
     
     return g;
@@ -85,10 +85,9 @@ void delete_graph(char_graph* g){
 
 
 // Crea una nueva arista. Si w == NULL, supone peso 1
-edge new_edge(const uint_t u, const uint_t v, const int* w){
+edge new_edge(const uint_t u, const uint_t v, const float w){
     edge e;
-    if(w) e.w = *w;
-    else e.w = 1;
+    e.w = w;
     
     e.u = u;
     e.v = v;

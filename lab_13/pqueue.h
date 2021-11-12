@@ -5,6 +5,12 @@
 
 typedef struct qnode_template *qlink;
 
+typedef struct {
+    int vertex;
+    int p;
+} prim_node;
+
+
 typedef struct qnode_template {
     float key;
     int value;

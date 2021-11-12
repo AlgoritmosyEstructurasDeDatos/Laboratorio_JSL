@@ -12,15 +12,11 @@ int main(){
     // Crea el grafo e inserta algunas aristas
     char_graph* g = create_graph(N, vertices);
     
-    edge e = new_edge(0, 1, NULL);
-    insert_edge(g, e);
-    e = new_edge(6, 1, NULL);
-    insert_edge(g, e);
-    int w = 2;
-    insert_edge(g, new_edge(2, 4, &w));
-    insert_edge(g, new_edge(1, 4, &w));
-    insert_edge(g, new_edge(3, 1, &w));
-    insert_edge(g, new_edge(7, 1, NULL));
+    for(int i = 0; i < g->V; i++)
+        for(int j = i+1; j < g->V; j++){
+            float w = (g->vertices[i] + g->vertices[j])/2;
+            insert_edge(g, new_edge(i, j, w));
+        }
     
     // Muestra la matriz del grafo
     for(int i=0; i < g->V; i++)
@@ -29,7 +25,7 @@ int main(){
     for(int i=0; i < g->V; i++){
         printf("%c\t", g->vertices[i]);
         for(int j=0; j < g->V; j++)
-            printf("%d\t", g->edges[i][j]);
+            printf("%.2f\t", g->edges[i][j]);
         putchar('\n');
     }
     
